@@ -21,27 +21,43 @@ Target DLL:      CMSIS_AGDI.dll V1.33.22.0
 Dialog DLL:      TARMCM1.DLL V1.14.6.0
  
 <h2>Project:</h2>
-D:\appDownload\STM32\Ti\mspm0_sdk_2_04_00_06\test5_UART_OK\keil\empty_LP_MSPM0G3507_nortos_keil.uvprojx
+D:\EDC_\fork\EDC_ti\UART_CanMV_OK\keil\empty_LP_MSPM0G3507_nortos_keil.uvprojx
 Project File Date:  07/31/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.23', folder: 'D:\appDownload\STM32\ARM\ARMCLANG\Bin'
 Build target 'empty_LP_MSPM0G3507_nortos_keil'
-Before Build - User command #1: cmd.exe /C "D:\appDownload\STM32\Ti\mspm0_sdk_2_04_00_06\test5_UART_OK\keil\../../tools/keil/syscfg.bat 'D:\appDownload\STM32\Ti\mspm0_sdk_2_04_00_06\test5_UART_OK\keil\' empty.syscfg"
-Using Sysconfig Tool from "D:\appDownload\STM32\Ti\sysconfig_1.23.1\sysconfig_cli.bat"
-"Update the file located at <sdk path>/tools/keil/syscfg.bat to use a different version"
-Running script...
-Validating...
-Generating Code (empty.syscfg)...
-Unchanged D:\appDownload\STM32\Ti\mspm0_sdk_2_04_00_06\test5_UART_OK\ti_msp_dl_config.c...
-Unchanged D:\appDownload\STM32\Ti\mspm0_sdk_2_04_00_06\test5_UART_OK\ti_msp_dl_config.h...
-Unchanged D:\appDownload\STM32\Ti\mspm0_sdk_2_04_00_06\test5_UART_OK\Event.dot...
+Before Build - User command #1: cmd.exe /C "D:\EDC_\fork\EDC_ti\UART_CanMV_OK\keil\../../tools/keil/syscfg.bat 'D:\EDC_\fork\EDC_ti\UART_CanMV_OK\keil\' empty.syscfg"
+œµÕ≥’“≤ªµΩ÷∏∂®µƒ¬∑æ∂°£
+../ti_msp_dl_config.c(41): warning: In file included from...
+..\ti_msp_dl_config.h(54): error: 'ti/devices/msp/msp.h' file not found
+   54 | #include <ti/devices/msp/msp.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling ti_msp_dl_config.c...
+../empty.c(32): warning: In file included from...
+..\ti_msp_dl_config.h(54): error: 'ti/devices/msp/msp.h' file not found
+   54 | #include <ti/devices/msp/msp.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
 compiling empty.c...
+../Hardware/Delay.c(18): error: 'ti/devices/msp/msp.h' file not found
+   18 | #include <ti/devices/msp/msp.h>  // ÈáçË¶ÅÔºöÂåÖÂê´ SysTick ÁöÑÂÆö‰πâ
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling Delay.c...
+../Hardware/OLED.c(3): error: 'ti_msp_dl_config.h' file not found
+    3 | #include "ti_msp_dl_config.h"
+      |          ^~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling OLED.c...
+../Hardware/Laser_USART.c(1): warning: In file included from...
+../Hardware\Laser_USART.h(3): error: 'ti_msp_dl_config.h' file not found
+    3 | #include "ti_msp_dl_config.h"
+      |          ^~~~~~~~~~~~~~~~~~~~
+1 error generated.
 compiling Laser_USART.c...
-linking...
-Program Size: Code=2616 RO-data=240 RW-data=16 ZI-data=600  
-FromELF: creating hex file...
-".\Objects\empty_LP_MSPM0G3507_nortos_keil.axf" - 0 Error(s), 0 Warning(s).
+".\Objects\empty_LP_MSPM0G3507_nortos_keil.axf" - 5 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -53,7 +69,8 @@ Package Vendor: TexasInstruments
 <h2>Collection of Component include folders:</h2>
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:04
+Target not created.
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>
