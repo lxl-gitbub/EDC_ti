@@ -135,7 +135,7 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>0</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
@@ -191,7 +191,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <StupSel>0</StupSel>
-            <useUlib>1</useUlib>
+            <useUlib>0</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -315,7 +315,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -372,7 +372,7 @@
             <TextAddressRange></TextAddressRange>
             <DataAddressRange></DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>./mspm0g3507.sct</ScatterFile>
+            <ScatterFile>.\mspm0g3507.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc>../../../source/ti/driverlib/lib/keil/m0p/mspm0g1x0x_g3x0x/driverlib.a</Misc>
@@ -480,11 +480,6 @@
         <Group>
           <GroupName>Sensor</GroupName>
           <Files>
-            <File>
-              <FileName>Rotation.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Utils\Sensor\Rotation.c</FilePath>
-            </File>
             <File>
               <FileName>SensorProc.c</FileName>
               <FileType>1</FileType>

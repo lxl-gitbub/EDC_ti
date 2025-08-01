@@ -77,46 +77,30 @@ ARM Macro Assembler    Page 2
    40 00000000         ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
    41 00000000         ; </h>
    42 00000000         
-   43 00000000 00004000 
+   43 00000000 00001000 
                        Stack_Size
-                               EQU              0x00004000
+                               EQU              0x00001000
    44 00000000         
    45 00000000                 AREA             STACK, NOINIT, READWRITE, ALIGN
 =3
    46 00000000         Stack_Mem
                                SPACE            Stack_Size
-<<<<<<< HEAD
-   47 00004000         __initial_sp
-   48 00004000         
-   49 00004000         
-   50 00004000         ; <h> Heap Configuration
-   51 00004000         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-   52 00004000         ; </h>
-   53 00004000         
-   54 00004000 00001000 
+   47 00001000         __initial_sp
+   48 00001000         
+   49 00001000         
+   50 00001000         ; <h> Heap Configuration
+   51 00001000         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+   52 00001000         ; </h>
+   53 00001000         
+   54 00001000 00001000 
                        Heap_Size
                                EQU              0x00001000
-   55 00004000         
-   56 00004000                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
-=======
-   47 00000100         __initial_sp
-   48 00000100         
-   49 00000100         
-   50 00000100         ; <h> Heap Configuration
-   51 00000100         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-   52 00000100         ; </h>
-   53 00000100         
-   54 00000100 00000100 
-                       Heap_Size
-                               EQU              0x000000100
-   55 00000100         
-   56 00000100                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
->>>>>>> badbb3cf5dc34a90b8ad1542ac00877c8a41d0a3
+   55 00001000         
+   56 00001000                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
 3
    57 00000000         __heap_base
    58 00000000         Heap_Mem
                                SPACE            Heap_Size
-<<<<<<< HEAD
    59 00001000         __heap_limit
    60 00001000         
    61 00001000         
@@ -127,18 +111,6 @@ ARM Macro Assembler    Page 2
    66 00001000         ; Vector Table Mapped to Address 0 at Reset
    67 00001000         
    68 00001000                 AREA             RESET, DATA, READONLY
-=======
-   59 00000100         __heap_limit
-   60 00000100         
-   61 00000100         
-   62 00000100                 PRESERVE8
-   63 00000100                 THUMB
-   64 00000100         
-   65 00000100         
-   66 00000100         ; Vector Table Mapped to Address 0 at Reset
-   67 00000100         
-   68 00000100                 AREA             RESET, DATA, READONLY
->>>>>>> badbb3cf5dc34a90b8ad1542ac00877c8a41d0a3
    69 00000000                 EXPORT           __Vectors
    70 00000000                 EXPORT           __Vectors_End
    71 00000000                 EXPORT           __Vectors_Size
@@ -256,7 +228,7 @@ ARM Macro Assembler    Page 4
                        SPM0
   138 00000000         ;LDR     R0, =SystemInit
   139 00000000         ;BLX     R0
-  140 00000000 4803            LDR              R0, =__main
+  140 00000000 4806            LDR              R0, =__main
   141 00000002 4700            BX               R0
   142 00000004                 ENDP
   143 00000004         
@@ -393,7 +365,6 @@ ARM Macro Assembler    Page 6
   226 00000010         ; User Initial Stack & Heap
   227 00000010         
   228 00000010                 IF               :DEF:__MICROLIB
-<<<<<<< HEAD
   235 00000010         
   236 00000010                 IMPORT           __use_two_region_memory
   237 00000010                 EXPORT           __user_initial_stackheap
@@ -415,7 +386,7 @@ ARM Macro Assembler    Page 6
   252 0000001C                 END
               00000000 
               00000000 
-              00004000 
+              00001000 
               00001000 
 
 
@@ -428,24 +399,6 @@ Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M0+ --dep
 end=.\objects\startup_mspm0g350x_uvision.d -o.\objects\startup_mspm0g350x_uvisi
 on.o --predefine="__UVISION_VERSION SETA 542" --predefine="__MSPM0G3507__ SETA 
 1" --list=.\startup_mspm0g350x_uvision.lst startup_mspm0g350x_uvision.s
-=======
-  229 00000010         
-  230 00000010                 EXPORT           __initial_sp
-  231 00000010                 EXPORT           __heap_base
-  232 00000010                 EXPORT           __heap_limit
-  233 00000010         
-  234 00000010                 ELSE
-  249                          ENDIF
-  250 00000010         
-  251 00000010         
-  252 00000010                 END
-              00000000 
-Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M0+ --dep
-end=.\objects\startup_mspm0g350x_uvision.d -o.\objects\startup_mspm0g350x_uvisi
-on.o --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 539" -
--predefine="__MSPM0G3507__ SETA 1" --list=.\startup_mspm0g350x_uvision.lst star
-tup_mspm0g350x_uvision.s
->>>>>>> badbb3cf5dc34a90b8ad1542ac00877c8a41d0a3
 
 
 
@@ -466,24 +419,17 @@ Symbol: Stack_Mem
    Definitions
       At line 46 in file startup_mspm0g350x_uvision.s
    Uses
-<<<<<<< HEAD
       At line 241 in file startup_mspm0g350x_uvision.s
       At line 243 in file startup_mspm0g350x_uvision.s
 
-__initial_sp 00004000
-=======
-      None
-Comment: Stack_Mem unused
-__initial_sp 00000100
->>>>>>> badbb3cf5dc34a90b8ad1542ac00877c8a41d0a3
+__initial_sp 00001000
 
 Symbol: __initial_sp
    Definitions
       At line 47 in file startup_mspm0g350x_uvision.s
    Uses
       At line 73 in file startup_mspm0g350x_uvision.s
-      At line 230 in file startup_mspm0g350x_uvision.s
-
+Comment: __initial_sp used once
 3 symbols
 
 
@@ -505,30 +451,25 @@ Symbol: Heap_Mem
    Definitions
       At line 58 in file startup_mspm0g350x_uvision.s
    Uses
-      None
-Comment: Heap_Mem unused
+      At line 240 in file startup_mspm0g350x_uvision.s
+      At line 242 in file startup_mspm0g350x_uvision.s
+
 __heap_base 00000000
 
 Symbol: __heap_base
    Definitions
       At line 57 in file startup_mspm0g350x_uvision.s
    Uses
-<<<<<<< HEAD
       None
 Comment: __heap_base unused
 __heap_limit 00001000
-=======
-      At line 231 in file startup_mspm0g350x_uvision.s
-Comment: __heap_base used once
-__heap_limit 00000100
->>>>>>> badbb3cf5dc34a90b8ad1542ac00877c8a41d0a3
 
 Symbol: __heap_limit
    Definitions
       At line 59 in file startup_mspm0g350x_uvision.s
    Uses
-      At line 232 in file startup_mspm0g350x_uvision.s
-Comment: __heap_limit used once
+      None
+Comment: __heap_limit unused
 4 symbols
 
 
@@ -879,39 +820,39 @@ Symbol: UART3_IRQHandler
       At line 94 in file startup_mspm0g350x_uvision.s
       At line 174 in file startup_mspm0g350x_uvision.s
 
-32 symbols
+__user_initial_stackheap 00000010
+
+Symbol: __user_initial_stackheap
+   Definitions
+      At line 239 in file startup_mspm0g350x_uvision.s
+   Uses
+      At line 237 in file startup_mspm0g350x_uvision.s
+Comment: __user_initial_stackheap used once
+33 symbols
 
 
 
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Absolute symbols
 
-<<<<<<< HEAD
 Heap_Size 00001000
-=======
-Heap_Size 00000100
->>>>>>> badbb3cf5dc34a90b8ad1542ac00877c8a41d0a3
 
 Symbol: Heap_Size
    Definitions
       At line 54 in file startup_mspm0g350x_uvision.s
    Uses
       At line 58 in file startup_mspm0g350x_uvision.s
-<<<<<<< HEAD
       At line 242 in file startup_mspm0g350x_uvision.s
 
-Stack_Size 00004000
-=======
-Comment: Heap_Size used once
-Stack_Size 00000100
->>>>>>> badbb3cf5dc34a90b8ad1542ac00877c8a41d0a3
+Stack_Size 00001000
 
 Symbol: Stack_Size
    Definitions
       At line 43 in file startup_mspm0g350x_uvision.s
    Uses
       At line 46 in file startup_mspm0g350x_uvision.s
-Comment: Stack_Size used once
+      At line 241 in file startup_mspm0g350x_uvision.s
+
 __Vectors_Size 000000C0
 
 Symbol: __Vectors_Size
@@ -935,5 +876,13 @@ Symbol: __main
    Uses
       At line 140 in file startup_mspm0g350x_uvision.s
 Comment: __main used once
-1 symbol
-381 symbols in table
+__use_two_region_memory 00000000
+
+Symbol: __use_two_region_memory
+   Definitions
+      At line 236 in file startup_mspm0g350x_uvision.s
+   Uses
+      None
+Comment: __use_two_region_memory unused
+2 symbols
+384 symbols in table

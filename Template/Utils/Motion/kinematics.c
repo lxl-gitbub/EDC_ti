@@ -2,29 +2,6 @@
 #include "AllHeader.h"
 
 
-// Initializes the car state to default values
-void CarState_Init(CarState *state) {
-    if (state == NULL) return; // Check for null pointer
-    state->pose.x = 0.0f;
-    state->pose.y = 0.0f;
-    state->pose.theta = 0.0f;
-    state->pose.initial_theta = getYaw(); // Initialize with current yaw angle
-    state->speed.linear_velocity = 0.0f;
-    state->speed.angular_velocity = 0.0f;
-    state->wheel_speed.left_wheel_speed = 0.0f;
-    state->wheel_speed.right_wheel_speed = 0.0f;
-}
-// Updates the car state based on wheel speeds and time delta
-void CarState_Update(CarState *state, Data d) {
-    // Calculate the average wheel speed
-    state->speed = d.speed;
-    state->pose.theta = sumTheta(d.yaw, -state->pose.initial_theta); // Update theta with current yaw
-    state->pose.x += state->speed.linear_velocity * d.dt * cos(DEG_TO_RAD(state->pose.theta));
-    state->pose.y += state->speed.linear_velocity * d.dt * sin(DEG_TO_RAD(state->pose.theta));
-    //????��??????????????????????????��????
-}
-
-
 // --- ??????? ---
 float sumTheta(float theta1, float theta2)
 {
@@ -84,42 +61,6 @@ Speed PID_Move(float v, float w, short isreload)
     RSet((int16_t)(STOD * wheel_speed.right_wheel_speed));
 
     return current_data.speed;
-}
-
-bool Straight(float distance, float speed, float target_theta, DIR dir)
-{
-    static int first_run = 1;
-    static float remain = 0.0f;
-    static float total = 0.0f;
-	static uint32_t last_time = 0;
-	uint32_t now = tick;
-
-    float v = (dir == FORWARD ? speed : -speed);
-    float theta_error = sumTheta(car.pose.theta, -target_theta);
-    float k_w = 6.0f; // ??????????
-
-    if (first_run && now - last_time > 1000) {
-        first_run = 0;
-        remain = distance;
-        total = distance;
-        PID_Move(v, -k_w * theta_error, 1); // ??��PID
-        return false;
-    }
-	last_time = now;
-
-    float dt = current_data.dt;
-
-    Speed cur = PID_Move(v, -k_w * theta_error, 0);
-    remain -= fabs(cur.linear_velocity) * dt;
-
-    // ???????????��first_run
-    if (fabs(remain) < 0.02f) {
-        first_run = 1;
-        LSet(0);
-        RSet(0);
-        return true;
-    }
-    return false;
 }
 
 bool runCircle(float radius, float speed, float angle, DIR dir)

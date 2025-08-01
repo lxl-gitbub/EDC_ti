@@ -22,9 +22,7 @@ char CircleNum = '0'; // Variable to hold the current circle number
 
 
 void menu_init(void)
-{
-    OLED_Init(); // Initialize the OLED display
-    // Initialize the menu system
+{// Initialize the menu system
     ModeNode rootNode = {NULL, "Root"}; // Create the root node
     now_mode_tree = createModeTree(rootNode); // Create the mode tree with the root node
     if (now_mode_tree == NULL) {

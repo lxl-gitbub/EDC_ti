@@ -35,8 +35,6 @@
 
 #include "Init_SMotor.h"
 
-#include "Cont_SMotor.h"
-
 //激光通信头文件
 #include "Laser_USART.h"
 

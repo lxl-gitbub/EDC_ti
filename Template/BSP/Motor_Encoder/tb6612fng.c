@@ -10,23 +10,6 @@
 */
 
 #include "tb6612fng.h"
-
-void Motor_Param_Init(Motor* M,	//In the Init function, the motor was set in sleep modle.
-		double reduce, //The reduce ratio of the motor
-		double full_speed_rpm, //The full speed of the motor in r/min
-		int wheel_diameter) //The diameter of the wheel in mm
-{
-	if(M == NULL)
-	{
-		//Debug_printf("Motor_Param_Init: NULL pointer detected\n");
-		//If you need test, please use debug functions
-		return;
-	}
-	M->param.reduce = reduce;
-	M->param.full_speed_rpm = full_speed_rpm;
-	M->param.wheel_diameter = wheel_diameter;
-}
-
 void Motor_UI_Init(Motor* M,	//In the Init function, the motor was set in sleep modle.
 		GPIO_Regs* p_port, //The GPIO port of the positive pin. Example: GPIOA
 		uint32_t p_pin,				//The GPIO pin mask. Example: DL_GPIO_PIN_1
@@ -91,53 +74,4 @@ void Motor_UI_Set(MOVETYPE type, uint16_t duty, Motor* M)
 	M->speed.current_duty = duty;
 	DL_TimerG_setCaptureCompareValue(M->speed.pwm_timer, M->speed.current_duty, M->speed.pwm_channel);
 	return;
-}
-
-int speed_to_duty(double speed, Motor* M)//speed is in m/s, and the return value is in 1-1000.
-//This function is used to convert the speed to duty, which is used in MotorSet function
-{
-	if (M == NULL) {
-		//Debug_printf("speed_to_duty: NULL pointer detected\n"); 
-		//If you need test, please use debug functions
-		return 0;
-	}
-	
-	if (speed < 0) {
-		speed = -speed;
-	}
-	
-	double full_speed_rps = M->param.full_speed_rpm / M->param.reduce / 60.0f; // Convert motor's r/min to wheel's r/s
-	double wheel_circumference = M->param.wheel_diameter * 3.14159265358979323846f / 1000.0f; // Convert mm to m
-	double full_speed_mps = full_speed_rps * wheel_circumference; // Convert wheel's r/s to m/s
-
-	if (full_speed_mps == 0) {
-		return 0; // Avoid division by zero
-	}
-
-	int duty = (int)(speed / full_speed_mps * 1000.0f); // Convert speed to duty
-	if (duty < 0) {
-		duty = 0; // Ensure duty is not negative
-	} else if (duty >= 1000) {
-		duty = 999; // Ensure duty does not exceed 1000
-	}
-	return duty; // Return the calculated duty
-}
-	
-void MotorSet(MOVETYPE type, double speed, Motor* M)
-{
-	if (M == NULL) {
-		//Debug_printf("MotorSet: NULL pointer detected\n"); 
-		//If you need test, please use debug functions
-		return;
-	}
-	
-	if (speed < 0) {
-		speed = -speed;
-		type = BACK;
-	} else {
-		type = FOR;
-	}
-
-	int duty = speed_to_duty(speed, M); // Convert speed to duty
-	Motor_UI_Set(type, duty, M);
 }

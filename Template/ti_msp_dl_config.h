@@ -115,28 +115,11 @@ extern "C" {
 
 
 
-
-/* Defines for QEI_0 */
-#define QEI_0_INST                                                         TIMG8
-#define QEI_0_INST_IRQHandler                                   TIMG8_IRQHandler
-#define QEI_0_INST_INT_IRQN                                     (TIMG8_INT_IRQn)
-/* Pin configuration defines for QEI_0 PHA Pin */
-#define GPIO_QEI_0_PHA_PORT                                                GPIOA
-#define GPIO_QEI_0_PHA_PIN                                        DL_GPIO_PIN_21
-#define GPIO_QEI_0_PHA_IOMUX                                     (IOMUX_PINCM46)
-#define GPIO_QEI_0_PHA_IOMUX_FUNC                    IOMUX_PINCM46_PF_TIMG8_CCP0
-/* Pin configuration defines for QEI_0 PHB Pin */
-#define GPIO_QEI_0_PHB_PORT                                                GPIOA
-#define GPIO_QEI_0_PHB_PIN                                         DL_GPIO_PIN_2
-#define GPIO_QEI_0_PHB_IOMUX                                      (IOMUX_PINCM7)
-#define GPIO_QEI_0_PHB_IOMUX_FUNC                     IOMUX_PINCM7_PF_TIMG8_CCP1
-
-
 /* Defines for TIMER_0 */
 #define TIMER_0_INST                                                     (TIMA0)
 #define TIMER_0_INST_IRQHandler                                 TIMA0_IRQHandler
 #define TIMER_0_INST_INT_IRQN                                   (TIMA0_INT_IRQn)
-#define TIMER_0_INST_LOAD_VALUE                                           (399U)
+#define TIMER_0_INST_LOAD_VALUE                                          (3999U)
 
 
 
@@ -220,6 +203,19 @@ extern "C" {
 #define Motor_IO_BIN2_PORT                                               (GPIOB)
 #define Motor_IO_BIN2_PIN                                       (DL_GPIO_PIN_19)
 #define Motor_IO_BIN2_IOMUX                                      (IOMUX_PINCM45)
+/* Defines for E1A: GPIOA.2 with pinCMx 7 on package pin 42 */
+#define Motor_IO_E1A_PORT                                                (GPIOA)
+// pins affected by this interrupt request:["E1A","E2A"]
+#define Motor_IO_INT_IRQN                                       (GPIOA_INT_IRQn)
+#define Motor_IO_INT_IIDX                       (DL_INTERRUPT_GROUP1_IIDX_GPIOA)
+#define Motor_IO_E1A_IIDX                                    (DL_GPIO_IIDX_DIO2)
+#define Motor_IO_E1A_PIN                                         (DL_GPIO_PIN_2)
+#define Motor_IO_E1A_IOMUX                                        (IOMUX_PINCM7)
+/* Defines for E2A: GPIOA.21 with pinCMx 46 on package pin 17 */
+#define Motor_IO_E2A_PORT                                                (GPIOA)
+#define Motor_IO_E2A_IIDX                                   (DL_GPIO_IIDX_DIO21)
+#define Motor_IO_E2A_PIN                                        (DL_GPIO_PIN_21)
+#define Motor_IO_E2A_IOMUX                                       (IOMUX_PINCM46)
 /* Defines for Tracking_1: GPIOB.6 with pinCMx 23 on package pin 58 */
 #define Tracking_Tracking_1_PORT                                         (GPIOB)
 #define Tracking_Tracking_1_PIN                                  (DL_GPIO_PIN_6)
@@ -272,7 +268,6 @@ void SYSCFG_DL_GPIO_init(void);
 void SYSCFG_DL_SYSCTL_init(void);
 void SYSCFG_DL_Motor_init(void);
 void SYSCFG_DL_SMotor_init(void);
-void SYSCFG_DL_QEI_0_init(void);
 void SYSCFG_DL_TIMER_0_init(void);
 void SYSCFG_DL_Debug_init(void);
 void SYSCFG_DL_K230_init(void);

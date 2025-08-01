@@ -8,7 +8,7 @@
 #ifndef SENSOR_PROC_H
 #define SENSOR_PROC_H
 
-#include "AllHeader.h"
+#include "Cont_SMotor.h"
 
 //以下是关于视觉处理部分的宏定义
 #define PAPERWIDE 250 //单位mm
@@ -24,8 +24,8 @@
 #define DisSensorToWheel 195 // 灰度传感器到轮子的垂直距离
 #define DisSensor 12 // 灰度传感器之间的距离
 
-
-bool isInTheYaw(float targetYaw, float tolerance); // Check if the current yaw is within a specified tolerance of the target yaw
+Coordinate paper_to_camera(Coordinate paper); // Convert paper coordinates to camera coordinates
+Coordinate get_target_coordinate(); // Get the target coordinate based on edge and distance
 
 float Grayscale_Num_To_Theta(int num); // Convert sensor number to angle in degrees
 float thetaGrayscale(); // Calculate the angle based on grayscale sensor readings

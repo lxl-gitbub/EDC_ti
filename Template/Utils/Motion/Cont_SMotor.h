@@ -28,11 +28,10 @@ typedef struct {
 } TargetPositionFunctions;
 
 void PID_SMotor_Cont(void); // 控制函数
-Attitude CoordinateToAttitude(Coordinate coord); // 坐标转换函数
 
-void TargetPositionUpdate(void); // 更新目标位置
-void TargetPositionSetFunctions(float (*t_to_x)(float t), float (*t_to_y)(float t), float init_t); // 设置目标位置转换函数
-void SetTargetCircle(float radius, float center_x, float center_y, float angular_velocity);
+void SetTargetCenter(void); // 设置目标中心位置函数
+void SetTargetCircle(void); // 设置目标圆位置函数
 
+void Compute_excur(void); // 计算偏差函数   
 
 #endif // CONT_SMOTOR_H

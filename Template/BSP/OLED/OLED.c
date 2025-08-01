@@ -42,20 +42,20 @@ void OLED_ColorTurn(uint8_t i)
     }
 }
  
-//屏幕旋转180度
-void OLED_DisplayTurn(uint8_t i)
-{
-if(i==0)
-    {
-        OLED_WR_Byte(0xC8,OLED_CMD);//正常显示
-        OLED_WR_Byte(0xA1,OLED_CMD);
-    }
-    if(i==1)
-    {
-        OLED_WR_Byte(0xC0,OLED_CMD);//反转显示
-        OLED_WR_Byte(0xA0,OLED_CMD);
-    }
-}
+////屏幕旋转180度
+//void OLED_DisplayTurn(uint8_t i)
+//{
+//if(i==0)
+//    {
+//        OLED_WR_Byte(0xC8,OLED_CMD);//正常显示
+//        OLED_WR_Byte(0xA1,OLED_CMD);
+//    }
+//    if(i==1)
+//    {
+//        OLED_WR_Byte(0xC0,OLED_CMD);//反转显示
+//        OLED_WR_Byte(0xA0,OLED_CMD);
+//    }
+//}
  
 //起始信号
 void I2C_Start(void)
@@ -278,37 +278,8 @@ void OLED_ShowString(uint8_t x,uint8_t y,char *chr,uint8_t sizey)
     }
 }
  
-//显示汉字
-void OLED_ShowChinese(uint8_t x,uint8_t y,uint8_t no,uint8_t sizey)
-{
-    uint16_t i,size1=(sizey/8+((sizey%8)?1:0))*sizey;
-    for(i=0;i<size1;i++)
-    {
-        if(i%sizey==0) OLED_Set_Pos(x,y++);
-        if(sizey==16) OLED_WR_Byte(Hzk[no][i],OLED_DATA);//16x16字号
-        //		else if(sizey==xx) OLED_WR_Byte(xxx[c][i],OLED_DATA);//用户添加字号
-        else return;
-    }				
-}
- 
-//显示图片
-//x,y显示坐标
-//sizex,sizey,图片长宽
-//BMP：要显示的图片
-void OLED_DrawBMP(uint8_t x,uint8_t y,uint8_t sizex, uint8_t sizey,uint8_t BMP[])
-{ 	
-    uint16_t j=0;
-    uint8_t i,m;
-    sizey=sizey/8+((sizey%8)?1:0);
-    for(i=0;i<sizey;i++)
-    {
-        OLED_Set_Pos(x,i+y);
-        for(m=0;m<sizex;m++)
-        {      
-            OLED_WR_Byte(BMP[j++],OLED_DATA);	    	
-        }
-    }
-}
+
+
  
 //初始化SSD1306					    
 void OLED_Init(void)

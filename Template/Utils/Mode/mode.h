@@ -16,4 +16,5 @@ void proH_2(void);
 int SetCircleNum(char num);
 bool turn_func(void);
 
+bool Init(void);
 #endif

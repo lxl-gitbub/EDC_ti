@@ -7,6 +7,7 @@ Coordinate laser_position = {0.0f, 0.0f}; // 激光雷达位置
 Coordinate target_position = {0.0f, 0.0f}; // 目标位置
 bool is_updated = false; // 是否更新了数据
 bool is_new_mode = true; // 是否进入了新模式
+Attitude cor = {0.0f, 0.0f}; // 姿态数据
 
 void PID_SMotor_Cont(void)
 {
@@ -43,3 +44,44 @@ void PID_SMotor_Cont(void)
     #endif
 }
 
+void SetTargetCenter(void)
+{
+    // 计算目标中心位置
+    if(is_updated)//此处可以替换为刘欣的接口
+    {
+        //此处要记得加上刘欣的接口
+    }
+    else if(!is_updated && true) 
+    {
+        // 此处要记得加上刘欣的接口，四个点相加除以2
+    }
+}
+
+void SetTargetCircle(void)
+{
+    target_position = paper_to_camera(get_target_coordinate()); // 获取目标坐标并转换为相机坐标系
+}
+
+void Compute_excur(void)
+{
+    // 计算偏差
+    switch(edge % 4)
+    {
+        case 0:
+            // 处理边缘情况0
+            break;
+        case 1:
+            // 处理边缘情况1
+            break;
+        case 2:
+            // 处理边缘情况2
+            break;
+        case 3:
+            // 处理边缘情况3
+            break;
+        default:
+            // 处理其他情况
+            break;
+    }
+    return; // 退出函数
+}

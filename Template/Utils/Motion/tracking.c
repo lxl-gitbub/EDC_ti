@@ -2,7 +2,7 @@
 #include "AllHeader.h"
 
 #define IRR_SPEED_HIGH  300  // 高速巡线速度
-#define IRR_SPEED_LOW   200  // 低速巡线速度
+#define IRR_SPEED_LOW   300  // 低速巡线速度
 
 // 高速PID参数
 #define IRTrack_Trun_KP_HIGH 50
@@ -10,9 +10,9 @@
 #define IRTrack_Trun_KD_HIGH 0
 
 // 低速PID参数
-#define IRTrack_Trun_KP_LOW  20
+#define IRTrack_Trun_KP_LOW  30
 #define IRTrack_Trun_KI_LOW  0
-#define IRTrack_Trun_KD_LOW  0.5
+#define IRTrack_Trun_KD_LOW  1.5
 
 const float pid_out_max = 5000.0f; 
 const float Integral_max = 500.0f; // 积分限幅值 

@@ -42,7 +42,6 @@
 
 DL_TimerG_backupConfig gMotorBackup;
 DL_TimerG_backupConfig gSMotorBackup;
-DL_TimerG_backupConfig gQEI_0Backup;
 DL_TimerA_backupConfig gTIMER_0Backup;
 
 /*
@@ -57,7 +56,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_SYSCTL_init();
     SYSCFG_DL_Motor_init();
     SYSCFG_DL_SMotor_init();
-    SYSCFG_DL_QEI_0_init();
     SYSCFG_DL_TIMER_0_init();
     SYSCFG_DL_Debug_init();
     SYSCFG_DL_K230_init();
@@ -65,7 +63,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     /* Ensure backup structures have no valid state */
 	gMotorBackup.backupRdy 	= false;
 	gSMotorBackup.backupRdy 	= false;
-	gQEI_0Backup.backupRdy 	= false;
 	gTIMER_0Backup.backupRdy 	= false;
 
 
@@ -80,7 +77,6 @@ SYSCONFIG_WEAK bool SYSCFG_DL_saveConfiguration(void)
 
 	retStatus &= DL_TimerG_saveConfiguration(Motor_INST, &gMotorBackup);
 	retStatus &= DL_TimerG_saveConfiguration(SMotor_INST, &gSMotorBackup);
-	retStatus &= DL_TimerG_saveConfiguration(QEI_0_INST, &gQEI_0Backup);
 	retStatus &= DL_TimerA_saveConfiguration(TIMER_0_INST, &gTIMER_0Backup);
 
     return retStatus;
@@ -93,7 +89,6 @@ SYSCONFIG_WEAK bool SYSCFG_DL_restoreConfiguration(void)
 
 	retStatus &= DL_TimerG_restoreConfiguration(Motor_INST, &gMotorBackup, false);
 	retStatus &= DL_TimerG_restoreConfiguration(SMotor_INST, &gSMotorBackup, false);
-	retStatus &= DL_TimerG_restoreConfiguration(QEI_0_INST, &gQEI_0Backup, false);
 	retStatus &= DL_TimerA_restoreConfiguration(TIMER_0_INST, &gTIMER_0Backup, false);
 
     return retStatus;
@@ -105,7 +100,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_GPIO_reset(GPIOB);
     DL_TimerG_reset(Motor_INST);
     DL_TimerG_reset(SMotor_INST);
-    DL_TimerG_reset(QEI_0_INST);
     DL_TimerA_reset(TIMER_0_INST);
     DL_UART_Main_reset(Debug_INST);
     DL_UART_Main_reset(K230_INST);
@@ -115,7 +109,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_GPIO_enablePower(GPIOB);
     DL_TimerG_enablePower(Motor_INST);
     DL_TimerG_enablePower(SMotor_INST);
-    DL_TimerG_enablePower(QEI_0_INST);
     DL_TimerA_enablePower(TIMER_0_INST);
     DL_UART_Main_enablePower(Debug_INST);
     DL_UART_Main_enablePower(K230_INST);
@@ -134,9 +127,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_enableOutput(GPIO_SMotor_C0_PORT, GPIO_SMotor_C0_PIN);
     DL_GPIO_initPeripheralOutputFunction(GPIO_SMotor_C1_IOMUX,GPIO_SMotor_C1_IOMUX_FUNC);
     DL_GPIO_enableOutput(GPIO_SMotor_C1_PORT, GPIO_SMotor_C1_PIN);
-
-    DL_GPIO_initPeripheralInputFunction(GPIO_QEI_0_PHA_IOMUX,GPIO_QEI_0_PHA_IOMUX_FUNC);
-    DL_GPIO_initPeripheralInputFunction(GPIO_QEI_0_PHB_IOMUX,GPIO_QEI_0_PHB_IOMUX_FUNC);
 
     DL_GPIO_initPeripheralOutputFunction(
         GPIO_Debug_IOMUX_TX, GPIO_Debug_IOMUX_TX_FUNC);
@@ -176,6 +166,14 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_initDigitalOutputFeatures(Motor_IO_BIN2_IOMUX,
 		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_PULL_DOWN,
 		 DL_GPIO_DRIVE_STRENGTH_LOW, DL_GPIO_HIZ_DISABLE);
+
+    DL_GPIO_initDigitalInputFeatures(Motor_IO_E1A_IOMUX,
+		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_NONE,
+		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
+
+    DL_GPIO_initDigitalInputFeatures(Motor_IO_E2A_IOMUX,
+		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_NONE,
+		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
 
     DL_GPIO_initDigitalInputFeatures(Tracking_Tracking_1_IOMUX,
 		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_PULL_DOWN,
@@ -223,6 +221,12 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_enableOutput(GPIOA, Motor_IO_AIN1_PIN |
 		OLED_SDA_PIN |
 		OLED_SCL_PIN);
+    DL_GPIO_setLowerPinsPolarity(GPIOA, DL_GPIO_PIN_2_EDGE_RISE);
+    DL_GPIO_setUpperPinsPolarity(GPIOA, DL_GPIO_PIN_21_EDGE_RISE);
+    DL_GPIO_clearInterruptStatus(GPIOA, Motor_IO_E1A_PIN |
+		Motor_IO_E2A_PIN);
+    DL_GPIO_enableInterrupt(GPIOA, Motor_IO_E1A_PIN |
+		Motor_IO_E2A_PIN);
     DL_GPIO_clearPins(GPIOB, LED_LED0_PIN |
 		Key_PIN_1_PIN |
 		SMotor_IO_DIR1_PIN |
@@ -257,6 +261,8 @@ SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_init(void)
     DL_SYSCTL_disableSYSPLL();
     DL_SYSCTL_setULPCLKDivider(DL_SYSCTL_ULPCLK_DIV_1);
     DL_SYSCTL_setMCLKDivider(DL_SYSCTL_MCLK_DIVIDER_DISABLE);
+    /* INT_GROUP1 Priority */
+    NVIC_SetPriority(GPIOA_INT_IRQn, 0);
 
 }
 
@@ -365,27 +371,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_SMotor_init(void) {
 }
 
 
-static const DL_TimerG_ClockConfig gQEI_0ClockConfig = {
-    .clockSel = DL_TIMER_CLOCK_BUSCLK,
-    .divideRatio = DL_TIMER_CLOCK_DIVIDE_1,
-    .prescale = 0U
-};
-
-
-SYSCONFIG_WEAK void SYSCFG_DL_QEI_0_init(void) {
-
-    DL_TimerG_setClockConfig(
-        QEI_0_INST, (DL_TimerG_ClockConfig *) &gQEI_0ClockConfig);
-
-    DL_TimerG_configQEI(QEI_0_INST, DL_TIMER_QEI_MODE_2_INPUT,
-        DL_TIMER_CC_INPUT_INV_NOINVERT, DL_TIMER_CC_0_INDEX);
-    DL_TimerG_configQEI(QEI_0_INST, DL_TIMER_QEI_MODE_2_INPUT,
-        DL_TIMER_CC_INPUT_INV_NOINVERT, DL_TIMER_CC_1_INDEX);
-    DL_TimerG_setLoadValue(QEI_0_INST, 65535);
-    DL_TimerG_enableClock(QEI_0_INST);
-}
-
-
 
 /*
  * Timer clock configuration to be sourced by BUSCLK /  (4000000 Hz)
@@ -400,7 +385,7 @@ static const DL_TimerA_ClockConfig gTIMER_0ClockConfig = {
 
 /*
  * Timer load value (where the counter starts from) is calculated as (timerPeriod * timerClockFreq) - 1
- * TIMER_0_INST_LOAD_VALUE = (10ms * 40000 Hz) - 1
+ * TIMER_0_INST_LOAD_VALUE = (100ms * 40000 Hz) - 1
  */
 static const DL_TimerA_TimerConfig gTIMER_0TimerConfig = {
     .period     = TIMER_0_INST_LOAD_VALUE,
@@ -416,6 +401,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_TIMER_0_init(void) {
     DL_TimerA_initTimerMode(TIMER_0_INST,
         (DL_TimerA_TimerConfig *) &gTIMER_0TimerConfig);
     DL_TimerA_enableInterrupt(TIMER_0_INST , DL_TIMERA_INTERRUPT_ZERO_EVENT);
+	NVIC_SetPriority(TIMER_0_INST_INT_IRQN, 3);
     DL_TimerA_enableClock(TIMER_0_INST);
 
 

@@ -77,9 +77,9 @@
   ..\Utils\Delay.h ..\BSP\Motor_Encoder\tb6612fng.h \
   ..\Utils\Motion\tracking.h ..\Utils\Motion\tracking_delay.h \
   ..\BSP\Motor_Encoder\Hall_Encoder.h ..\Utils\Motion\pid.h \
-  ..\Utils\Sensor\SensorProc.h ..\Utils\Sensor\Rotation.h \
+  ..\Utils\Sensor\SensorProc.h ..\Utils\Motion\Cont_SMotor.h \
   ..\BSP\SMotor\SMotor.h ..\Utils\Initialize\Init_SMotor.h \
-  ..\Utils\Motion\Cont_SMotor.h ..\BSP\Laser_USART\Laser_USART.h \
+  ..\Utils\Sensor\Rotation.h ..\BSP\Laser_USART\Laser_USART.h \
   ..\BSP\TrackingSensor\TrackingSensor.h ..\Utils\Mode\menu.h \
   ..\Utils\Mode\mode_tree.h ..\Utils\Mode\circle_list.h \
   ..\Utils\Mode\mode.h ..\BSP\key\key.h

@@ -3,13 +3,13 @@
 
 void SMotor_Init(SMotor *motor, GPIO_Regs *Dir_port, uint32_t Dir_pin,
                  GPTIMER_Regs *pwm_timer, DL_TIMER_CC_INDEX pwm_channel) {
-//    if (motor == NULL || pwm_timer == NULL) {
-//        #ifdef INITIALIZE_H
-//        sprintf(error_message, "SMotor_Init: motor or pwm_timer is NULL");
-//        error_handler();
-//        #endif
-//        return;
-//    }
+    if (motor == NULL || pwm_timer == NULL) {
+        #ifdef INITIALIZE_H
+        sprintf(error_message, "SMotor_Init: motor or pwm_timer is NULL");
+        error_handler();
+        #endif
+        return;
+    }
     motor->Dir_port = Dir_port;
     motor->Dir_pin = Dir_pin;
     motor->pwm_timer = pwm_timer;
@@ -25,26 +25,26 @@ void SMotor_Init(SMotor *motor, GPIO_Regs *Dir_port, uint32_t Dir_pin,
 }
 
 void SMotor_Parameters_Init(SMotor *motor, SMOTOR_DIR_STATE Anti_Dir, float step_angular, float step_divisor) {
-//    if (motor == NULL) {
-//        #ifdef INITIALIZE_H
-//        sprintf(error_message, "SMotor_Parameters_Init: motor is NULL");
-//        error_handler();
-//        #endif
-//        return;
-//    }
+    if (motor == NULL) {
+        #ifdef INITIALIZE_H
+        sprintf(error_message, "SMotor_Parameters_Init: motor is NULL");
+        error_handler();
+        #endif
+        return;
+    }
     motor->parameters.Anti_Dir = Anti_Dir;
     motor->parameters.step_angular = step_angular;
     motor->parameters.step_divisor = step_divisor;
 }
 
 void SMotor_SetSpeed(SMotor *motor, float angular_speed) {
-//    if (motor == NULL || motor->pwm_timer == NULL) {
-//        #ifdef INITIALIZE_H
-//        sprintf(error_message, "SMotor_SetSpeed: motor or pwm_timer is NULL");
-//        error_handler();
-//        #endif
-//        return;
-//    }
+    if (motor == NULL || motor->pwm_timer == NULL) {
+        #ifdef INITIALIZE_H
+        sprintf(error_message, "SMotor_SetSpeed: motor or pwm_timer is NULL");
+        error_handler();
+        #endif
+        return;
+    }
     double aspeed = angular_speed;
     if(angular_speed == 0) {
         DL_TimerG_setCaptureCompareValue(motor->pwm_timer, 0, motor->pwm_channel); // Stop PWM
@@ -77,13 +77,13 @@ void SMotor_SetSpeed(SMotor *motor, float angular_speed) {
 }
 
 void SMotor_UpdateState(SMotor *motor) {
-//    if (motor == NULL) {
-//        #ifdef INITIALIZE_H
-//        sprintf(error_message, "SMotor_UpdateState: motor is NULL");
-//        error_handler();
-//        #endif
-//        return;
-//    }
+    if (motor == NULL) {
+        #ifdef INITIALIZE_H
+        sprintf(error_message, "SMotor_UpdateState: motor is NULL");
+        error_handler();
+        #endif
+        return;
+    }
     if(motor->state.last_update_time == -1) {
         motor->state.last_update_time = tick; // Initialize last update time
         return;
@@ -95,10 +95,10 @@ void SMotor_UpdateState(SMotor *motor) {
 
 uint32_t GetClockFre(GPTIMER_Regs* timer) {
     if (timer == NULL) {
-//        #ifdef INITIALIZE_H
-//        sprintf(error_message, "GetClockFre: timer is NULL");
-//        error_handler();
-//        #endif
+        #ifdef INITIALIZE_H
+        sprintf(error_message, "GetClockFre: timer is NULL");
+        error_handler();
+        #endif
         return 0;
     }
     // TI MSPM0 系统时钟通常为32MHz
@@ -109,10 +109,10 @@ uint32_t GetClockFre(GPTIMER_Regs* timer) {
 
 uint32_t GetStepFrequency(float angular_speed, SMotor *motor) {
     if (motor == NULL) {
-//        #ifdef INITIALIZE_H
-//        sprintf(error_message, "GetStepFrequency: motor is NULL");
-//        error_handler();
-//        #endif
+        #ifdef INITIALIZE_H
+        sprintf(error_message, "GetStepFrequency: motor is NULL");
+        error_handler();
+        #endif
         return 0;
     }
     if (angular_speed < 0) {

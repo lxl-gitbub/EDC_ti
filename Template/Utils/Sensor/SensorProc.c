@@ -6,9 +6,11 @@
  *  Description: Source file for sensor processing functions
  */
 #include "SensorProc.h"
+#include "AllHeader.h"
 
 Coordinate paperCornerC[4];
 extern int edge;
+extern float sInedge;
 
 //以下函数用于处理视觉模块，主要在绘图的时候使用(未测)
 Coordinate paper_to_camera(Coordinate paper)
@@ -27,7 +29,7 @@ Coordinate paper_to_camera(Coordinate paper)
 Coordinate get_target_coordinate()
 {
     Coordinate target;
-    float target_theta = (edge - 1) * 90.0f; // 计算目标角度 有个疑虑，在出发点edge = 0 而且编码器的数值还没叠加起来
+    float target_theta = (edge - 1) * 90.0f + sInedge; // 计算目标角度 有个疑虑，在出发点edge = 0 而且编码器的数值还没叠加起来
     target.x = CIRCLERADIUS * cosf(DEG_TO_RAD(target_theta));
     target.y = CIRCLERADIUS * sinf(DEG_TO_RAD(target_theta));
     // 将目标坐标转换为相对于纸张中心的坐标
@@ -71,15 +73,24 @@ float thetaGrayscale()
 
 bool Road_detect(int nummin, int nummax)
 {
-		int sumIRDetect = 0;
-		int i = 0;
-		while(i < 8){	if(Digital[i]==0) sumIRDetect ++; i++;}
-		if(sumIRDetect <= nummax && sumIRDetect >= nummin) 	return 1;
-		else return 0;
+    static int last_time = 0;
+//    if (tick - last_time < 100) // 防抖动
+//    {
+//        return false; // 如果上次检测时间小于100ms，则不进行检测
+//    }
+    int sumIRDetect = 0;
+    int i = 0;
+    while(i < 8){	if(Digital[i]==0) sumIRDetect ++; i++;}
+    if(sumIRDetect <= nummax && sumIRDetect >= nummin)
+		{
+		//last_time = tick;
+			return 1;
+		}
+    else return 0;
 }
 bool half_Detect(){
 //三岔路口检测
-	return Road_detect(5, 7);
+	return Road_detect(3, 6);
 }
 
 bool cross_Roads_Detect(){
